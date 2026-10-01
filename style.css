@@ -211,10 +211,10 @@ video[data-loop] { cursor: zoom-in; }
 /* expand button on each clip */
 .expand {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  width: 36px;
-  height: 36px;
+  right: 6px;
+  bottom: 6px;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
   border: 0;
@@ -224,7 +224,7 @@ video[data-loop] { cursor: zoom-in; }
   opacity: 0.85;
   transition: opacity 0.2s ease, background 0.2s ease;
 }
-.expand svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.expand svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
 .expand:hover, .expand:focus-visible { opacity: 1; background: var(--charcoal); }
 
 /* large-view overlay */
@@ -270,8 +270,10 @@ video[data-loop] { cursor: zoom-in; }
   padding: clamp(14px, 2vw, 22px) 0;
 }
 .pair .poster { aspect-ratio: 9 / 16; }
-.pair .media, .pair .media-grid { margin-bottom: 20px; }
-.pair .media-grid .media { margin-bottom: 0; }
+/* text sits above the images; subgrid keeps both images starting on the same line */
+.pair { grid-template-rows: auto auto; }
+.pair > div { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
+.pair-text { margin-bottom: 20px; }
 .pair p { max-width: 36em; }
 .pair p + p { margin-top: 12px; }
 .media-grid.animatic .media { aspect-ratio: 16 / 9; background: #fff; }
