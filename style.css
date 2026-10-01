@@ -99,6 +99,8 @@ h4 {
 .section + .section { padding-top: clamp(24px, 3vw, 40px); }
 .section:last-child { padding-bottom: clamp(72px, 10vw, 128px); }
 .section > .display { margin-bottom: clamp(32px, 5vw, 56px); }
+/* section headings sit a step below the page title */
+h2.display { font-size: clamp(40px, 6.4vw, 80px); }
 .block { margin-top: clamp(40px, 6vw, 64px); }
 
 .entries {
