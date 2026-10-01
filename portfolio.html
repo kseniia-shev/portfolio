@@ -156,24 +156,51 @@
       window.addEventListener("resize", fit);
     })();
 
-    // Click any looping clip to watch it full screen, with controls.
+    // Viewer: click a clip (or its expand button) to watch it large, with sound
+    // controls. An on-page overlay, so it works even where full screen is blocked.
     (function () {
-      document.querySelectorAll("video[data-loop]").forEach(function (v) {
-        v.addEventListener("click", function () {
-          if (v.requestFullscreen) v.requestFullscreen();
-          else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
-          else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
-          v.play();
-        });
-      });
-      function sync() {
-        var fs = document.fullscreenElement || document.webkitFullscreenElement;
-        document.querySelectorAll("video[data-loop]").forEach(function (v) {
-          v.controls = v === fs;
-        });
+      var box = document.createElement("div");
+      box.className = "viewer";
+      box.hidden = true;
+      box.innerHTML = '<button class="viewer-close" aria-label="Close">&times;</button><video controls loop playsinline></video>';
+      document.body.appendChild(box);
+      var big = box.querySelector("video");
+      var closeBtn = box.querySelector(".viewer-close");
+      var opener = null;
+
+      function open(v) {
+        opener = v;
+        big.src = v.currentSrc || v.src;
+        big.poster = v.poster;
+        box.hidden = false;
+        document.body.style.overflow = "hidden";
+        big.play().catch(function () {});
+        closeBtn.focus();
       }
-      document.addEventListener("fullscreenchange", sync);
-      document.addEventListener("webkitfullscreenchange", sync);
+      function close() {
+        big.pause();
+        big.removeAttribute("src");
+        big.load();
+        box.hidden = true;
+        document.body.style.overflow = "";
+        if (opener) opener.parentNode.querySelector(".expand").focus();
+      }
+
+      document.querySelectorAll("video[data-loop]").forEach(function (v) {
+        var btn = document.createElement("button");
+        btn.className = "expand";
+        btn.setAttribute("aria-label", "View larger");
+        btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+        v.parentNode.appendChild(btn);
+        btn.addEventListener("click", function () { open(v); });
+        v.addEventListener("click", function () { open(v); });
+      });
+
+      closeBtn.addEventListener("click", close);
+      box.addEventListener("click", function (e) { if (e.target === box) close(); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !box.hidden) close();
+      });
     })();
 
     // Play looping clips only while they're on screen; respect reduced motion.

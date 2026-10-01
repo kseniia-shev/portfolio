@@ -207,7 +207,56 @@ h4 {
 .project p + p { margin-top: 10px; }
 
 video[data-loop] { cursor: zoom-in; }
-video[data-loop]:fullscreen { object-fit: contain; background: #000; cursor: auto; }
+
+/* expand button on each clip */
+.expand {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: rgba(42, 42, 42, 0.75);
+  color: var(--light);
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.expand svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.expand:hover, .expand:focus-visible { opacity: 1; background: var(--charcoal); }
+
+/* large-view overlay */
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 56px 16px 16px;
+  background: rgba(20, 20, 20, 0.97);
+}
+.viewer[hidden] { display: none; }
+.viewer video {
+  max-width: min(100%, 1400px);
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  background: #000;
+}
+.viewer-close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--light);
+  font: 400 40px/1 "Hanken Grotesk", sans-serif;
+  cursor: pointer;
+}
 
 .stack { display: grid; gap: clamp(10px, 1.6vw, 18px); }
 
