@@ -1,0 +1,273 @@
+/* Kseniia Sheveleva — portfolio site
+   Matches the PDF portfolio: charcoal hero, warm grey content,
+   big lowercase headings ending in a full stop. One typeface throughout. */
+
+:root {
+  --charcoal: #2a2a2a;
+  --paper: #e3e2de;
+  --ink: #2b2b2b;
+  --body: #3a3a3a;
+  --muted: #5b5b5b;
+  --square: #5c5c5c;
+  --light: #e3e2de;
+  --gutter: clamp(20px, 7vw, 96px);
+  --max: 1180px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  background: var(--paper);
+  color: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+img, video { display: block; max-width: 100%; }
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* ---------- type ---------- */
+
+.display {
+  font-weight: 800;
+  font-size: clamp(56px, 10vw, 128px);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  color: var(--ink);
+}
+
+.lead {
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.45;
+  max-width: 34em;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+/* ---------- header ---------- */
+
+.dark { background: var(--charcoal); color: var(--light); }
+.dark .display { color: var(--light); }
+
+.topnav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 28px 0;
+}
+.back, .next-link {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+}
+/* the back arrow hangs in the margin so both labels share a left edge */
+.back::before { content: "\2190"; position: absolute; right: 100%; margin-right: 0.35em; }
+.next-link::after { content: "\00a0\2192"; }
+.back:hover, .next-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.hero { padding-top: clamp(12px, 2.5vw, 32px); padding-bottom: clamp(56px, 9vw, 112px); }
+.hero .lead { margin-top: clamp(24px, 3vw, 36px); color: #d4d3cf; }
+
+/* ---------- content ---------- */
+
+.section { padding-top: clamp(48px, 7vw, 88px); padding-bottom: clamp(24px, 4vw, 48px); }
+.section + .section { padding-top: clamp(24px, 3vw, 40px); }
+.section:last-child { padding-bottom: clamp(72px, 10vw, 128px); }
+.section > .display { margin-bottom: clamp(32px, 5vw, 56px); }
+.block { margin-top: clamp(40px, 6vw, 64px); }
+
+.entries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px clamp(24px, 4vw, 48px);
+}
+.entry p, .project p { max-width: 30em; }
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px clamp(24px, 4vw, 48px);
+}
+.ticks { list-style: none; }
+.ticks li { position: relative; padding-left: 20px; margin-bottom: 6px; }
+.ticks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background: var(--square);
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 20px clamp(24px, 4vw, 48px);
+}
+.feature p + p { margin-top: 10px; }
+.feature p + .ticks { margin-top: 18px; }
+
+.button {
+  display: inline-block;
+  margin-top: clamp(32px, 5vw, 48px);
+  padding: 14px 26px;
+  background: var(--charcoal);
+  color: var(--light);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.button:hover, .button:focus-visible { background: #444; }
+
+.divider {
+  border: 0;
+  border-top: 1px solid rgba(43, 43, 43, 0.18);
+  margin-top: clamp(36px, 5vw, 64px);
+}
+
+/* project rows: media left, text right */
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(14px, 2vw, 22px) 0;
+}
+
+.media {
+  position: relative;
+  background: #cfcdc8;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.media video, .media img, .media iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.6vw, 18px);
+}
+.media-grid .media { aspect-ratio: 1200 / 1024; }
+
+/* web: clickable site previews */
+.media.site { display: block; aspect-ratio: 16 / 10; background: #111; }
+.media.site img { object-position: top; }
+.media.site iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 900px;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+.media.site:hover img, .media.site:hover iframe { opacity: 0.88; }
+
+.phones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.6vw, 18px);
+  /* fills the column, but never taller than ~80% of the screen */
+  max-width: min(100%, 80vh);
+}
+.phones .media { aspect-ratio: 506 / 1016; }
+
+.project p + p { margin-top: 10px; }
+
+video[data-loop] { cursor: zoom-in; }
+video[data-loop]:fullscreen { object-fit: contain; background: #000; cursor: auto; }
+
+.stack { display: grid; gap: clamp(10px, 1.6vw, 18px); }
+
+/* Fourth Wall: festival poster and animatic side by side, text underneath.
+   Poster column is sized so it matches the height of the 2x2 grid. */
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: start;
+  padding: clamp(14px, 2vw, 22px) 0;
+}
+.pair .poster { aspect-ratio: 9 / 16; }
+.pair .media, .pair .media-grid { margin-bottom: 20px; }
+.pair .media-grid .media { margin-bottom: 0; }
+.pair p { max-width: 36em; }
+.pair p + p { margin-top: 12px; }
+.media-grid.animatic .media { aspect-ratio: 16 / 9; background: #fff; }
+
+/* ---------- landing ---------- */
+
+.split {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--charcoal) url("assets/chosen.jpg") center / cover no-repeat;
+}
+.split a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--light);
+  background: rgba(42, 42, 42, 0.55);
+  transition: background 0.3s ease;
+}
+.split a:hover, .split a:focus-visible { background: rgba(42, 42, 42, 0.15); }
+.split span {
+  font-weight: 800;
+  font-size: clamp(48px, 8vw, 112px);
+  letter-spacing: -0.055em;
+  line-height: 1;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: -6px; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 760px) {
+  .project, .feature { grid-template-columns: 1fr; }
+  .pair { grid-template-columns: 1fr; }
+  .pair .poster { max-width: 320px; }
+}
+
+@media (max-width: 600px) {
+  .split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
